@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>M+ Shoes – Premium Local Shoe Shop</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Model Viewer for GLB 3D rotation (replace GLB URL with your shoe model) -->
+    <script
+      type="module"
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+    ></script>
+  </head>
+  <body>
+    <!-- LOADING EXPERIENCE -->
+    <div id="loader" class="loader">
+      <div class="loader-content">
+        <!-- Replace src with a shoe GLB; this is a placeholder -->
+        <model-viewer
+          id="loaderModel"
+          src="Material/color_wave_sneaker.glb"
+          camera-controls
+          auto-rotate
+          ar
+          shadow-intensity="1"
+          style="width: 240px; height: 240px"
+        ></model-viewer>
+        <h1 class="brand">M+ Shoes</h1>
+        <p class="tagline">Step Into Confidence</p>
+        <div class="progress" id="loaderProgress">
+          <div class="progress-track">
+            <div class="progress-fill" id="loaderProgressFill" style="width: 1%"></div>
+          </div>
+          <div class="progress-label"><span id="loaderProgressLabel">1%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAVIGATION BAR -->
+    <header class="navbar">
+      <div class="nav-inner">
+        <a href="#home" class="logo">M+ Shoes</a>
+        <nav class="nav-links" id="navLinks">
+          <a href="#home" class="nav-link">Home</a>
+          <a href="#about" class="nav-link">About</a>
+          <a href="#shoes" class="nav-link">Shoes</a>
+          <a href="#contact" class="nav-link">Contact</a>
+          <a href="#location" class="nav-link">Location</a>
+        </nav>
+        <button id="hamburger" class="hamburger" aria-label="Open Menu">
+          <span></span><span></span><span></span>
+        </button>
+        <!-- Floating Basket -->
+        <button class="basket-fab" id="basketFab" aria-label="Open Basket">
+          <span class="icon">🛍️</span>
+          <span class="count" id="basketCount">0</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO / HOME -->
+      <section id="home" class="section hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+          <h2 class="headline">Style That Walks With You.</h2>
+          <p class="subtext">Premium shoes. Trusted locally. Loved daily.</p>
+          <button class="cta primary" id="scrollToShoes">Explore Shoes</button>
+        </div>
+        <!-- Floating animated shapes -->
+        <div class="floating-shapes" aria-hidden="true">
+          <span class="shape circle"></span>
+          <span class="shape star"></span>
+          <span class="shape line"></span>
+          <span class="shape circle c2"></span>
+          <span class="shape line"></span>
+          <span class="shape star s2"></span>
+          <span class="shape line"></span>
+          <span class="shape line l2"></span>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section id="about" class="section about">
+        <div class="container">
+          <h3 class="section-title">About M+ Shoes</h3>
+          <div class="about-grid">
+            <div class="about-text reveal">
+              <p>
+                At M+ Shoes, we’re locally trusted for footwear that blends
+                everyday comfort with standout style. We carefully select
+                quality materials, maintain affordable pricing, and put
+                customers first—every time.
+              </p>
+              <p>
+                Whether you’re dressing for work, weekends, or a special
+                occasion, our collection delivers confidence in every step.
+              </p>
+              <p>
+                Walk in, try out, and feel the difference. Your feet will thank
+                you.
+              </p>
+            </div>
+            <div class="about-visual reveal">
+              <div class="visual-canvas">
+                <span class="v-shape v1"></span>
+                <span class="v-shape v2"></span>
+                <span class="v-shape v3"></span>
+                <model-viewer
+                  id="aboutModel"
+                  src="Material/color_wave_sneaker.glb"
+                  camera-controls
+                  auto-rotate
+                  rotation-per-second="39deg"
+                  camera-target="auto"
+                  shadow-intensity="1"
+                ></model-viewer>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SHOES -->
+      <section id="shoes" class="section shoes">
+        <div class="container">
+          <h3 class="section-title">Shoes</h3>
+          <div class="grid" id="shoeGrid"></div>
+        </div>
+      </section>
+
+      <!-- BASKET PANEL -->
+      <aside id="basketPanel" class="basket-panel" aria-hidden="true">
+        <div class="basket-header">
+          <h4>Your Basket</h4>
+          <button id="closeBasket" class="icon-btn" aria-label="Close Basket">
+            ✕
+          </button>
+        </div>
+        <div id="basketItems" class="basket-items"></div>
+        <div class="basket-summary">
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span>₹ <strong id="subtotal">0</strong></span>
+          </div>
+          <div class="summary-row">
+            <span>Discount</span>
+            <span>- ₹ <strong id="discount">0</strong></span>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <span>₹ <strong id="total">0</strong></span>
+          </div>
+          <div class="basket-actions">
+            <button id="proceedToBook" class="primary">Proceed to Book</button>
+            <button id="clearBasket" class="danger">Remove all</button>
+          </div>
+        </div>
+      </aside>
+      <div id="basketOverlay" class="overlay" aria-hidden="true"></div>
+
+      <!-- BOOKING MODAL -->
+      <div id="bookingModal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4>Book Your Shoes</h4>
+            <button id="closeBooking" class="icon-btn" aria-label="Close">
+              ✕
+            </button>
+          </div>
+          <div id="bookingSummary" class="booking-summary"></div>
+          <form id="bookingForm" class="form">
+            <div class="form-row">
+              <input
+                type="text"
+                id="customerName"
+                name="customer_name"
+                placeholder="Customer Name"
+                required
+              />
+            </div>
+            <div class="form-row">
+              <input
+                type="tel"
+                id="customerPhone"
+                name="phone"
+                placeholder="Phone Number"
+                required
+              />
+            </div>
+            <div class="form-row">
+              <select id="pickupTime" name="pickup_time" required>
+                <option value="">Select Pickup Timing</option>
+                <option>Today 5–7 PM</option>
+                <option>Tomorrow 11–1 PM</option>
+                <option>Tomorrow 5–7 PM</option>
+                <option>Weekend 11–1 PM</option>
+              </select>
+            </div>
+            <button type="submit" class="primary wide">Book the Shoe</button>
+            <p class="form-status" id="bookingStatus"></p>
+          </form>
+        </div>
+      </div>
+      <div id="bookingOverlay" class="overlay" aria-hidden="true"></div>
+
+      <!-- CONTACT -->
+      <section id="contact" class="section contact">
+        <div class="container">
+          <h3 class="section-title">Contact Us Now for Enquiry</h3>
+          <div class="contact-grid">
+            <div class="contact-info reveal">
+              <p>📞 Phone: <strong>9561616927</strong></p>
+              <p>
+                💬 WhatsApp:
+                <a
+                  class="whatsapp"
+                  href="https://wa.me/919561616927"
+                  target="_blank"
+                  rel="noopener"
+                  >9561616927</a
+                >
+              </p>
+              <p class="note">
+                We’ll respond quickly and help you pick the perfect pair.
+              </p>
+            </div>
+            <div class="contact-form reveal">
+              <form id="contactForm" class="form">
+                <div class="form-row">
+                  <input
+                    type="text"
+                    id="enquiryName"
+                    name="name"
+                    placeholder="Your Name"
+                    required
+                  />
+                </div>
+                <div class="form-row">
+                  <input
+                    type="tel"
+                    id="enquiryPhone"
+                    name="phone"
+                    placeholder="Phone Number"
+                    required
+                  />
+                </div>
+                <div class="form-row">
+                  <textarea
+                    id="enquiryMessage"
+                    name="message"
+                    placeholder="Your Message / Enquiry"
+                    rows="4"
+                    required
+                  ></textarea>
+                </div>
+                <button type="submit" class="primary wide">Send Enquiry</button>
+                <p class="form-status" id="contactStatus"></p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- LOCATION -->
+      <section id="location" class="section location">
+        <div class="container">
+          <h3 class="section-title">Locate Me</h3>
+          <p class="note">Exact location will be updated soon.</p>
+          <div class="map-wrap reveal">
+            <iframe
+              title="M+ Shoes Map"
+              class="map"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15130.723163294107!2d73.856743!3d18.52043!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c06a1b0d70a3%3A0x9f5c29c5a!2sPune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+            <a
+              class="map-link"
+              href="https://www.google.com/maps?q=Pune,+Maharashtra"
+              target="_blank"
+              rel="noopener"
+              >Open full map</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <p>© M+ Shoes. All Rights Reserved</p>
+        <div class="marquee">
+          <div class="marquee-track">
+            <span>M+ Shoes • Premium • Trusted • Affordable • Style • Comfort •</span>
+            <span>M+ Shoes • Premium • Trusted • Affordable • Style • Comfort •</span>
+            <span>M+ Shoes • Premium • Trusted • Affordable • Style • Comfort •</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js" defer></script>
+  </body>
+</html>
