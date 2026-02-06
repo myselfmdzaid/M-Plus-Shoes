@@ -1,4 +1,5 @@
-# M+ Shoes - Premium Local Shoe Shop Website (https://myselfmdzaid.github.io/M-Plus-Shoes/)
+# M+ Shoes - Premium Local Shoe Shop Website
+https://myselfmdzaid.github.io/M-Plus-Shoes/
 
 ## 💡 Idea
 The core idea was to build a high-impact, single-page, animated website for **M+ Shoes**, a local offline shoe business. The goal was to bridge the gap between offline trust and online convenience by allowing customers to browse the collection in 3D, select their favorites, and book them directly for pickup, without the complexity of a full e-commerce payment gateway.
