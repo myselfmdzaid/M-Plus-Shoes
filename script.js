@@ -1,3 +1,49 @@
+// ====== THEME MANAGER ======
+(function () {
+  const KEY = "mplus-theme"; // stored value: 'light' | 'dark' | 'system'
+
+  function systemIsDark() {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+
+  function applyTheme(pref) {
+    const resolved = pref === "system" ? (systemIsDark() ? "dark" : "light") : pref;
+    document.documentElement.setAttribute("data-theme", resolved);
+  }
+
+  function syncButtons(pref) {
+    document.querySelectorAll(".theme-btn").forEach(function (btn) {
+      btn.classList.toggle("active", btn.getAttribute("data-theme-val") === pref);
+    });
+  }
+
+  function setTheme(pref) {
+    localStorage.setItem(KEY, pref);
+    applyTheme(pref);
+    syncButtons(pref);
+  }
+
+  // Apply immediately (before paint) to avoid flash
+  var saved = localStorage.getItem(KEY) || "system";
+  applyTheme(saved);
+
+  // Wire up buttons after DOM is ready
+  document.addEventListener("DOMContentLoaded", function () {
+    syncButtons(saved);
+    document.querySelectorAll(".theme-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        setTheme(btn.getAttribute("data-theme-val"));
+      });
+    });
+  });
+
+  // Track live OS theme change (only matters when pref is 'system')
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () {
+    var cur = localStorage.getItem(KEY) || "system";
+    if (cur === "system") applyTheme("system");
+  });
+})();
+
 // ====== CONFIGURABLE SHOE DATA ======
 // You can freely customize this list; IDs should be unique
 const SHOES = [
